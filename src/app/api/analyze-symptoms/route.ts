@@ -98,9 +98,9 @@ IMPORTANT:
       );
     }
     return NextResponse.json(parsedData.data, { status: 200 });
-  } catch (error: any) {
+  } catch (error: Error | unknown) {
     return NextResponse.json(
-      { error: `Server error: ${error.message}` },
+      { error: `Server error: ${error instanceof Error ? error.message : 'Unknown error'}` },
       { status: 500 }
     );
   }

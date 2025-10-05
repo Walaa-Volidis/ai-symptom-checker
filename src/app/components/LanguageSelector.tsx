@@ -3,7 +3,7 @@ import { Languages } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 export function LanguageSelector() {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage} = useLanguage();
 
   return (
     <div className="flex items-center gap-3 bg-white rounded-2xl shadow-lg px-4 py-3 border-2 border-blue-100">

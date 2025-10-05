@@ -2,10 +2,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Heart, Stethoscope, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext'; 
+import { SymptomAnalysisResult } from '../types/SymptomAnalysisResult';
 
-export function SymptomResultCard({ data }: { data: any }) {
-  const { language, t } = useLanguage(); 
-  const isRTL = language === 'ar'; 
+export function SymptomResultCard({ data }: { data: SymptomAnalysisResult }) {
+  const { language, t } = useLanguage();
+  const isRTL = language === 'ar';
 
   const getSeverityColor = (severity: string) => {
     const severityLower = severity.toLowerCase();
