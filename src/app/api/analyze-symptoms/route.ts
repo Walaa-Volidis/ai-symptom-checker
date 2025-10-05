@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Groq from 'groq-sdk';
-import { json, z } from 'zod';
+import { z } from 'zod';
 import { SERVER_SETTINGS } from '../../../settings';
 
 const SymptomResponseSchema = z.object({
@@ -21,16 +21,26 @@ const groq = new Groq({
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { userInput } = body;
+    const { userInput, language = 'en' } = body;
 
     if (!userInput) {
       return NextResponse.json({ error: 'Input is required' }, { status: 400 });
     }
 
+    const languageInstructions = {
+      en: 'Respond in English.',
+      ar: 'Respond in Arabic (العربية). All fields must be in Arabic language.',
+    };
+
     const prompt = `
 You are a professional medical AI assistant. The user provides the following information about their health:
 
 "${userInput}"
+
+${
+  languageInstructions[language as keyof typeof languageInstructions] ||
+  languageInstructions.en
+}
 
 Analyze the information carefully and provide a detailed response including:
 1) The most likely medical condition.
@@ -54,7 +64,12 @@ Output ONLY in JSON format as an object with the following structure:
   "nextSteps": ["string", ...]
 }
 
-Respond concisely, clearly, and ONLY in JSON format as json object. Do NOT include any extra text.
+IMPORTANT: 
+- Keep severity in English lowercase (mild, moderate, or severe)
+- All other text content should be in ${
+      language === 'ar' ? 'Arabic' : 'English'
+    }
+- Respond concisely, clearly, and ONLY in JSON format. Do NOT include any extra text.
     `;
 
     const chatCompletion = await groq.chat.completions.create({
@@ -82,7 +97,6 @@ Respond concisely, clearly, and ONLY in JSON format as json object. Do NOT inclu
         { status: 500 }
       );
     }
-
     return NextResponse.json(parsedData.data, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
