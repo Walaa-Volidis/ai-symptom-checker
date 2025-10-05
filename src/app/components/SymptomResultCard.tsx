@@ -1,26 +1,41 @@
 'use client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Heart, Stethoscope, AlertCircle } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext'; 
 
 export function SymptomResultCard({ data }: { data: any }) {
+  const { language, t } = useLanguage(); 
+  const isRTL = language === 'ar'; 
+
   const getSeverityColor = (severity: string) => {
+    const severityLower = severity.toLowerCase();
     const colors: Record<string, string> = {
-      Mild: 'text-green-600 bg-green-50 border-green-200',
-      Moderate: 'text-yellow-600 bg-yellow-50 border-yellow-200',
-      Severe: 'text-red-600 bg-red-50 border-red-200',
+      mild: 'text-green-600 bg-green-50 border-green-200',
+      moderate: 'text-yellow-600 bg-yellow-50 border-yellow-200',
+      severe: 'text-red-600 bg-red-50 border-red-200',
     };
-    return colors[severity] || 'text-gray-600 bg-gray-50 border-gray-200';
+    return colors[severityLower] || 'text-gray-600 bg-gray-50 border-gray-200';
+  };
+
+  const translateSeverity = (severity: string) => {
+    const severityLower = severity.toLowerCase();
+    const severityMap: Record<string, string> = {
+      'mild': t('mild'),
+      'moderate': t('moderate'),
+      'severe': t('severe'),
+    };
+    return severityMap[severityLower] || severity;
   };
 
   return (
-    <div className="space-y-6 mt-8 opacity-0 animate-fade-in">
+    <div className="space-y-6 mt-8 opacity-0 animate-fade-in" dir={isRTL ? 'rtl' : 'ltr'}>
       {/* Main Result Card */}
       <Card className="bg-white rounded-3xl shadow-xl border-2 border-blue-100 overflow-hidden">
         <CardHeader className="pb-4">
-          <div className="flex items-center gap-3">
+          <div className={`flex items-center gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}> 
             <CheckCircle className="w-8 h-8 text-green-600" />
             <CardTitle className="text-3xl font-bold text-gray-800">
-              Analysis Complete
+              {t('analysisComplete')} 
             </CardTitle>
           </div>
         </CardHeader>
@@ -29,7 +44,7 @@ export function SymptomResultCard({ data }: { data: any }) {
           {/* Possible Condition */}
           <div className="p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl">
             <p className="text-sm text-gray-600 mb-2 font-medium">
-              Possible Condition
+              {t('possibleCondition')}
             </p>
             <p className="text-3xl font-bold text-gray-800">
               {data.possibleCondition}
@@ -39,20 +54,20 @@ export function SymptomResultCard({ data }: { data: any }) {
           {/* Severity Badge */}
           <div>
             <p className="text-sm text-gray-600 mb-2 font-medium">
-              Severity Level
+              {t('severityLevel')}
             </p>
             <span
               className={`inline-block px-6 py-3 rounded-full font-semibold text-lg border-2 ${getSeverityColor(
                 data.severity
               )}`}
             >
-              {data.severity}
+              {translateSeverity(data.severity)}
             </span>
           </div>
 
           {/* Feeling Summary */}
           <div className="p-6 bg-gray-50 rounded-2xl">
-            <p className="text-sm text-gray-600 mb-2 font-medium">Summary</p>
+            <p className="text-sm text-gray-600 mb-2 font-medium">{t('summary')}</p>
             <p className="text-gray-700 leading-relaxed">
               {data.feelingSummary}
             </p>
@@ -61,9 +76,9 @@ export function SymptomResultCard({ data }: { data: any }) {
           {/* Extracted Symptoms */}
           <div>
             <p className="text-sm text-gray-600 mb-3 font-medium">
-              Identified Symptoms
+              {t('identifiedSymptoms')} 
             </p>
-            <div className="flex flex-wrap gap-2">
+            <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
               {data.symptomsExtracted.map((symptom: string, idx: number) => (
                 <span
                   key={idx}
@@ -82,10 +97,10 @@ export function SymptomResultCard({ data }: { data: any }) {
         {/* Self-Care Tips */}
         <Card className="bg-white rounded-3xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
           <CardHeader>
-            <div className="flex items-center gap-2">
+            <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}> 
               <Heart className="w-6 h-6 text-pink-600" />
               <CardTitle className="text-xl font-bold text-gray-800">
-                Self-Care Tips
+                {t('selfCareTips')}
               </CardTitle>
             </div>
           </CardHeader>
@@ -97,10 +112,10 @@ export function SymptomResultCard({ data }: { data: any }) {
         {/* Recommended Doctor */}
         <Card className="bg-white rounded-3xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
           <CardHeader>
-            <div className="flex items-center gap-2">
+            <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}> 
               <Stethoscope className="w-6 h-6 text-blue-600" />
               <CardTitle className="text-xl font-bold text-gray-800">
-                Recommended Specialist
+                {t('recommendedSpecialist')}
               </CardTitle>
             </div>
           </CardHeader>
@@ -116,7 +131,7 @@ export function SymptomResultCard({ data }: { data: any }) {
       <Card className="bg-white rounded-3xl shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-gray-800">
-            Next Steps
+            {t('nextSteps')} 
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -124,7 +139,9 @@ export function SymptomResultCard({ data }: { data: any }) {
             {data.nextSteps.map((step: string, idx: number) => (
               <div
                 key={idx}
-                className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl transition-all duration-300 hover:bg-gray-100 hover:translate-x-1"
+                className={`flex items-start gap-4 p-4 bg-gray-50 rounded-xl transition-all duration-300 hover:bg-gray-100 hover:translate-x-1 ${
+                  isRTL ? 'flex-row-reverse' : ''
+                }`} 
               >
                 <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-sm">
                   {idx + 1}
@@ -138,11 +155,11 @@ export function SymptomResultCard({ data }: { data: any }) {
 
       {/* Additional Notes */}
       <div className="bg-amber-50 border-2 border-amber-200 rounded-3xl p-6">
-        <div className="flex items-start gap-4">
+        <div className={`flex items-start gap-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <AlertCircle className="w-6 h-6 text-amber-600 flex-shrink-0 mt-1" />
           <div>
             <h3 className="font-semibold text-amber-800 mb-2">
-              Important Note
+              {t('importantNote')} 
             </h3>
             <p className="text-amber-700 leading-relaxed">
               {data.additionalNotes}
