@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext'; 
-
+import {SymptomAnalysisResult} from '../types/SymptomAnalysisResult';
 export function useSymptomCheck() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<SymptomAnalysisResult | null>(null);
   const { language } = useLanguage();
 
   async function checkSymptoms(userInput: string) {
@@ -26,8 +26,8 @@ export function useSymptomCheck() {
       } else {
         setResult(data);
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err: Error | unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setLoading(false);
     }
