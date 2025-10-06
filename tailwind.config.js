@@ -1,6 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 const config = {
   theme: {
+    darkMode: 'class', 
+
     extend: {
       animation: {
         'fade-in': 'fade-in 0.6s ease-out forwards',
