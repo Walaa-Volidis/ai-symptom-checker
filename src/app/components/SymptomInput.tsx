@@ -5,13 +5,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { Activity, Heart, Loader2 } from 'lucide-react';
 import { useLanguage } from '../../app/contexts/LanguageContext';
 
-export function SymptomInput({
+interface SymptomInputProps {
+  onSubmit: (input: string) => void;
+  loading?: boolean;
+}
+export const SymptomInput: React.FC<SymptomInputProps> = ({
   onSubmit,
   loading = false,
 }: {
   onSubmit: (input: string) => void;
   loading?: boolean;
-}) {
+}) => {
   const [input, setInput] = useState('');
   const { language, t } = useLanguage();
   const isRTL = language === 'ar';
