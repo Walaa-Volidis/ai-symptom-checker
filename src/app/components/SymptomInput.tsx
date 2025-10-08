@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Activity, Heart, Loader2 } from 'lucide-react';
 import { useLanguage } from '../../app/contexts/LanguageContext';
-
+import { VoiceInput } from './VoiceInput';
 interface SymptomInputProps {
   onSubmit: (input: string) => void;
   loading?: boolean;
@@ -26,6 +26,16 @@ export const SymptomInput: React.FC<SymptomInputProps> = ({
     }
   };
 
+  const handleVoiceTranscript = (transcript: string) => {
+    // Append voice transcript to existing input
+    setInput((prevInput) => {
+      if (prevInput) {
+        return prevInput + ' ' + transcript;
+      }
+      return transcript;
+    });
+  };
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 transition-all duration-300 hover:shadow-2xl opacity-0 animate-fade-in animation-delay-200 border dark:border-gray-700">
       <div
@@ -39,14 +49,31 @@ export const SymptomInput: React.FC<SymptomInputProps> = ({
         </h2>
       </div>
 
-      <Textarea
-        placeholder={t('inputPlaceholder')}
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        rows={6}
-        className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-2xl focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900 outline-none transition-all duration-300 resize-none text-gray-700"
-        style={{ direction: isRTL ? 'rtl' : 'ltr' }}
-      />
+      <div className="mb-4">
+        <VoiceInput onTranscript={handleVoiceTranscript} />
+      </div>
+
+      <div className="relative">
+        <Textarea
+          placeholder={t('inputPlaceholder')}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          rows={6}
+          className="w-full px-4 py-3 border-2 border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-100 rounded-2xl focus:border-blue-500 dark:focus:border-blue-400 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900 outline-none transition-all duration-300 resize-none text-gray-700"
+          style={{ direction: isRTL ? 'rtl' : 'ltr' }}
+          disabled={loading}
+        />
+
+        {input && (
+          <div
+            className={`absolute bottom-2 text-xs text-gray-400 ${
+              isRTL ? 'left-2' : 'right-2'
+            }`}
+          >
+            {input.length} {language === 'ar' ? 'حرف' : 'characters'}
+          </div>
+        )}
+      </div>
 
       <Button
         onClick={handleSubmit}
