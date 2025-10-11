@@ -32,6 +32,7 @@ export const VoiceInput: React.FC<VoiceInputProps> = ({ onTranscript }) => {
       return;
     }
 
+    // @ts-ignore
     const SpeechRecognition =
       (window as any).SpeechRecognition ||
       (window as any).webkitSpeechRecognition;
@@ -48,6 +49,9 @@ export const VoiceInput: React.FC<VoiceInputProps> = ({ onTranscript }) => {
       console.log('Voice recognition started');
     };
 
+
+
+// @ts-ignore
     recognition.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
       console.log('Transcript:', transcript);
@@ -55,6 +59,7 @@ export const VoiceInput: React.FC<VoiceInputProps> = ({ onTranscript }) => {
       setIsListening(false);
     };
 
+    // @ts-ignore
     recognition.onerror = (event: any) => {
       console.error('Speech recognition error:', event.error);
       setIsListening(false);
