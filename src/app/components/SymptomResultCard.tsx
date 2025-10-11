@@ -2,7 +2,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { CheckCircle, Heart, Stethoscope, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
-import {SymptomAnalysisResult} from '../types/SymptomAnalysisResult';
+import { SymptomAnalysisResult } from '../types/SymptomAnalysisResult';
+import { TextToSpeech } from './TextToSpeech';
 export const SymptomResultCard: React.FC<{ data: SymptomAnalysisResult }> = ({
   data,
 }) => {
@@ -34,6 +35,30 @@ export const SymptomResultCard: React.FC<{ data: SymptomAnalysisResult }> = ({
     return severityMap[severityLower] || severity;
   };
 
+
+  const createSpeechText = () => {
+  const severityText = translateSeverity(data.severity);
+  
+  return `
+    ${t('analysisComplete')}.
+    ${t('possibleCondition')}: ${data.possibleCondition}.
+    ${t('severityLevel')}: ${severityText}.
+    
+    ${t('summary')}: ${data.feelingSummary}.
+    
+    ${t('selfCareTips')}: ${data.selfCareTips}.
+    
+    ${t('recommendedSpecialist')}: ${data.recommendedDoctor}.
+    
+    ${t('nextSteps')}:
+    ${data.nextSteps
+      .map((step: string, idx: number) => `${idx + 1}. ${step}`)
+      .join('. ')}.
+    
+    ${t('importantNote')}: ${data.additionalNotes}.
+  `.trim();
+};
+
   return (
     <div
       className="space-y-6 mt-8 opacity-0 animate-fade-in"
@@ -43,14 +68,23 @@ export const SymptomResultCard: React.FC<{ data: SymptomAnalysisResult }> = ({
       <Card className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border-2 border-blue-100 dark:border-gray-700 overflow-hidden">
         <CardHeader className="pb-4">
           <div
-            className={`flex items-center gap-3 ${
+            className={`flex items-center justify-between ${
               isRTL ? 'flex-row-reverse' : ''
             }`}
           >
-            <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
-            <CardTitle className="text-3xl font-bold text-gray-800 dark:text-gray-100">
-              {t('analysisComplete')}
-            </CardTitle>
+            {/* Left side: Title with icon */}
+            <div
+              className={`flex items-center gap-3 ${
+                isRTL ? 'flex-row-reverse' : ''
+              }`}
+            >
+              <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
+              <CardTitle className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+                {t('analysisComplete')}
+              </CardTitle>
+            </div>
+
+            <TextToSpeech text={createSpeechText()} autoPlay={false} />
           </div>
         </CardHeader>
 
