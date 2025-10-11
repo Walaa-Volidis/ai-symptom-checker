@@ -32,10 +32,9 @@ export const VoiceInput: React.FC<VoiceInputProps> = ({ onTranscript }) => {
       return;
     }
 
-    // @ts-ignore
     const SpeechRecognition =
-      (window as any).SpeechRecognition ||
-      (window as any).webkitSpeechRecognition;
+      (window as Window).SpeechRecognition ||
+      (window as Window).webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
 
     // Set language based on current app language
@@ -49,18 +48,14 @@ export const VoiceInput: React.FC<VoiceInputProps> = ({ onTranscript }) => {
       console.log('Voice recognition started');
     };
 
-
-
-// @ts-ignore
-    recognition.onresult = (event: any) => {
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
       const transcript = event.results[0][0].transcript;
       console.log('Transcript:', transcript);
       onTranscript(transcript);
       setIsListening(false);
     };
 
-    // @ts-ignore
-    recognition.onerror = (event: any) => {
+    recognition.onerror = (event: SpeechRecognitionErrorEvent) => {
       console.error('Speech recognition error:', event.error);
       setIsListening(false);
 
