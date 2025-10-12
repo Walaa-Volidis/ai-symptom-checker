@@ -1,10 +1,6 @@
 # 🩺 AI Symptom Checker
 
-[![Banner](./public/banner.png)](https://ai-symptom-checker.vercel.app/)
-
 An intelligent, multilingual symptom checker powered by AI. Describe your symptoms in plain language and receive instant, detailed analysis, including potential conditions, severity levels, and self-care advice.
-
-[**Live Demo**](https://ai-symptom-checker.vercel.app/)
 
 ---
 
@@ -24,15 +20,7 @@ An intelligent, multilingual symptom checker powered by AI. Describe your sympto
 -   **Dark Mode:** Includes a theme toggle for comfortable use in all lighting conditions.
 -   **Voice Input:** Supports voice-to-text for hands-free symptom description (in supported browsers).
 
----
 
-## 📸 Screenshots
-
-| Light Mode                               | Dark Mode                                |
-| ---------------------------------------- | ---------------------------------------- |
-| ![Light Mode](./public/screenshot-1.png) | ![Dark Mode](./public/screenshot-2.png)   |
-
----
 
 ## 🛠️ Technologies Used
 
@@ -109,7 +97,3 @@ docker run -p 3000:3000 -e GROQ_API_KEY=$GROQ_API_KEY ai-symptom-checker
 ```
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
