@@ -46,8 +46,8 @@ An intelligent, multilingual symptom checker powered by AI. Describe your sympto
 1.  **Clone the repository:**
 
     ```bash
-    git clone https://github.com/your-username/ai-code-explainer.git
-    cd ai-code-explainer
+    git clone https://github.com/walaa-volidis/ai-symptom-checker.git
+    cd ai-symptom-checker
     ```
 
 2.  **Install dependencies:**
@@ -93,7 +93,7 @@ To build and run the Docker container:
 docker build -t ai-symptom-checker .
 
 # Run the container
-docker run -p 3000:3000 -e GROQ_API_KEY=$GROQ_API_KEY ai-symptom-checker
+docker run -p 3000:3000 ai-symptom-checker
 ```
 
 ---
