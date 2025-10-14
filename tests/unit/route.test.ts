@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-
+import { z } from 'zod';
 vi.mock('../../src/settings.ts', () => ({
   SERVER_SETTINGS: { groqApiKey: 'test-key' },
 }));
@@ -19,9 +19,15 @@ vi.mock('groq-sdk', () => {
 });
 
 import { POST } from '../../src/app/api/analyze-symptoms/route';
+export const AnalyzeSymptomsInputSchema = z.object({
+  userInput: z.string(),
+  language: z.enum(['en', 'ar']).optional().default('en'),
+});
+export type AnalyzeSymptomsBody = z.infer<typeof AnalyzeSymptomsInputSchema>;
 
-function makeRequest(body: unknown) {
-  return { json: async () => body } as any; 
+
+function makeRequest(body: AnalyzeSymptomsBody) {
+  return { json: async () => body } as unknown as Pick<Request, 'json'>;
 }
 
 async function readJson(res: Response) {
@@ -72,7 +78,7 @@ describe('POST /api/health', () => {
     const req = makeRequest({
       userInput: 'I have a cough and runny nose',
       language: 'en',
-    });
+    } as AnalyzeSymptomsBody);
     const res = await POST(req);
     const { status, data } = await readJson(res as unknown as Response);
 
@@ -104,7 +110,7 @@ describe('POST /api/health', () => {
     const req = makeRequest({
       userInput: 'سعال وانسداد الأنف',
       language: 'ar',
-    });
+    } as AnalyzeSymptomsBody);
     const res = await POST(req);
     const { status, data } = await readJson(res as unknown as Response);
 
@@ -117,7 +123,7 @@ describe('POST /api/health', () => {
       choices: [{ message: { content: undefined } }],
     });
 
-    const req = makeRequest({ userInput: 'headache', language: 'en' });
+    const req = makeRequest({ userInput: 'headache', language: 'en' } as AnalyzeSymptomsBody);
     const res = await POST(req);
     const { status, data } = await readJson(res as unknown as Response);
 
@@ -130,7 +136,7 @@ describe('POST /api/health', () => {
       choices: [{ message: { content: JSON.stringify({ foo: 'bar' }) } }],
     });
 
-    const req = makeRequest({ userInput: 'random text', language: 'en' });
+    const req = makeRequest({ userInput: 'random text', language: 'en' } as AnalyzeSymptomsBody);
     const res = await POST(req);
     const { status, data } = await readJson(res as unknown as Response);
 
@@ -142,7 +148,7 @@ describe('POST /api/health', () => {
   it('returns 500 on Groq client error (exception thrown)', async () => {
     createSpy.mockRejectedValueOnce(new Error('API down'));
 
-    const req = makeRequest({ userInput: 'fever', language: 'en' });
+    const req = makeRequest({ userInput: 'fever', language: 'en' } as AnalyzeSymptomsBody);
     const res = await POST(req);
     const { status, data } = await readJson(res as unknown as Response);
 

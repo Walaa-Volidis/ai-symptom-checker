@@ -1,6 +1,6 @@
 interface Window {
-  webkitSpeechRecognition?: any;
-  SpeechRecognition?: any;
+  webkitSpeechRecognition?: SpeechRecognition;
+  SpeechRecognition?: SpeechRecognition;
 }
 interface SpeechRecognitionEvent {
   results: SpeechRecognitionResultList;

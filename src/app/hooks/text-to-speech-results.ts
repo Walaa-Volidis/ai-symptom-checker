@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+
 interface TextToSpeechProps {
   text: string;
   autoPlay?: boolean;
@@ -13,26 +14,7 @@ export function useTextToSpeech({
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [isSupported, setIsSupported] = useState(true);
-
-  useEffect(() => {
-    if (!('speechSynthesis' in window)) {
-      setIsSupported(false);
-      console.error('Speech synthesis not supported in this browser');
-    }
-
-    if (autoPlay && isSupported && text) {
-      const timer = setTimeout(() => speak(), 1000);
-      return () => clearTimeout(timer);
-    }
-
-    return () => {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
-
-  const speak = () => {
+  const speak = useCallback(() => {
     if (!isSupported || !text) {
       console.warn('Cannot speak: not supported or no text');
       return;
@@ -73,7 +55,27 @@ export function useTextToSpeech({
     };
 
     window.speechSynthesis.speak(utterance);
-  };
+  }, [text, language, isSupported]);
+
+  useEffect(() => {
+    if (!('speechSynthesis' in window)) {
+      setIsSupported(false);
+      console.error('Speech synthesis not supported in this browser');
+    }
+
+    if (autoPlay && isSupported && text) {
+      const timer = setTimeout(() => speak(), 1000);
+      return () => clearTimeout(timer);
+    }
+
+    return () => {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, [autoPlay, isSupported, text, speak]);
+
+
 
   const stop = () => {
     if ('speechSynthesis' in window) {
