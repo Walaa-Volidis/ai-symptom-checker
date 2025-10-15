@@ -22,6 +22,7 @@ The app includes voice input, text-to-speech output, dark/light themes, and supp
 | **Next.js** | React framework for building fast, server-rendered web applications |
 | **TypeScript** | Provides strong typing and reliable development experience |
 | **Tailwind CSS** | Utility-first CSS framework for responsive UI |
+| **shadcn/ui** | Beautifully designed and accessible UI components built on top of Radix UI |
 | **Lucide React** | Clean, lightweight icons |
 | **Groq API** | Powers the AI symptom reasoning |
 
