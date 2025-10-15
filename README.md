@@ -1,86 +1,123 @@
-# AI-Powered Symptom Analyzer
+# 🧠 AI-Powered Symptom Analyzer (Groq Edition)
 
-This is a web application that allows users to input their symptoms and get an analysis of possible causes using AI.
+An intelligent and bilingual web application that allows users to describe their symptoms and receive an **AI-generated health analysis** using the **Groq API**.  
+The app includes voice input, text-to-speech output, dark/light themes, and supports both Arabic and English for an accessible experience.
 
-## Features
+> ⚠️ **Disclaimer:** This project is for **educational and informational purposes only** and should **not be used as a substitute for professional medical diagnosis or treatment.**
 
-*   **Symptom Analysis:** Users can enter their symptoms and get a list of possible medical conditions.
-*   **Dark/Light Theme:** The application supports both dark and light themes for user comfort.
-*   **Language Selection:** The application supports both English and Arabic languages.
-*   **Text-to-Speech:** The application can read the analysis results out loud.
-*   **Voice Input:** Users can input their symptoms using their voice.
+---
 
-## Technologies Used
+## ✨ Features
 
-*   **Next.js:** A React framework for building server-side rendered and static web applications.
-*   **TypeScript:** A typed superset of JavaScript that compiles to plain JavaScript.
-*   **Tailwind CSS:** A utility-first CSS framework for rapidly building custom user interfaces.
-*   **Lucide React:** A library of simply designed icons for React.
-*   **Google Generative AI:** The AI model used for symptom analysis.
+- 🩺 **AI Symptom Analysis (via Groq API):** Enter or speak your symptoms, and the system provides possible medical explanations using Groq’s high-performance LLM.
+- 🎙️ **Voice Input:** Use your microphone to describe symptoms hands-free.
+- 🔊 **Text-to-Speech Output:** Hear your results spoken aloud using the browser’s SpeechSynthesis API.
+- 🌓 **Dark/Light Themes:** Switch between light and dark modes to suit your environment.
+- 🌐 **Bilingual Interface (English & Arabic):** Toggle easily between English and Arabic.
 
-## Getting Started
+---
 
-To get a local copy up and running, follow these simple steps.
+## 🧩 Technologies Used
 
-### Prerequisites
+| Technology | Purpose |
+|-------------|----------|
+| **Next.js** | React framework for building fast, server-rendered web applications |
+| **TypeScript** | Provides strong typing and reliable development experience |
+| **Tailwind CSS** | Utility-first CSS framework for responsive UI |
+| **Lucide React** | Clean, lightweight icons |
+| **Groq API** | Powers the AI symptom reasoning |
+| **SpeechRecognition API** | Handles voice input |
+| **SpeechSynthesis API** | Enables text-to-speech responses |
 
-*   npm
-```sh
+---
+
+## ⚙️ Getting Started
+
+Follow these steps to set up the project locally.
+
+### ✅ Prerequisites
+
+Ensure you have the following installed:
+- **Node.js** (v18 or higher)
+- **npm**
+
+Install the latest npm version if needed:
 npm install npm@latest -g
-```
 
-### Installation
+---
 
-1.  Clone the repo
-```sh
-git clone https://github.com/your_username_/Project-Name.git
-```
-2.  Install NPM packages
-```sh
-npm install
-```
-3.  Create a `.env.local` file and add your Google Generative AI API key:
-```sh
-NEXT_PUBLIC_GOOGLE_API_KEY=YOUR_API_KEY
-```
+## 🚀 Installation
 
-### Running the Application
+Clone the repository:  
+git clone https://github.com/Walaa-Volidis/ai-symptom-checker.git  
+cd ai-symptom-checker  
 
-```sh
-npm run dev
-```
+Install dependencies:  
+npm install  
 
-## Usage
+Configure environment variables by creating a `.env.local` file in the project root and adding your **Groq API key**:  
+NEXT_PUBLIC_GROQ_API_KEY=your_groq_api_key_here  
 
-1.  Enter your symptoms in the text area or use the voice input button.
-2.  Click the "Analyze Symptoms" button.
-3.  The application will display a list of possible medical conditions based on your symptoms.
-4.  You can toggle between dark and light themes using the theme toggle button.
-5.  You can switch between English and Arabic languages using the language selector.
-6.  You can use the text-to-speech feature to have the results read to you.
+Run the application:  
+npm run dev  
 
-## Deployment
+Now open your browser at:  
+http://localhost:3000
 
-This application is containerized using Docker and can be deployed to a Kubernetes cluster.
+---
+
+## 💡 Usage
+
+Type or speak your symptoms.  
+Click “Analyze Symptoms”.  
+The AI model (via Groq API) suggests possible medical conditions.  
+Use the 🔊 button to listen to results.  
+Switch between 🌙 Dark / ☀️ Light modes.  
+Change the interface language between 🇬🇧 English and 🇸🇦 Arabic.
+
+---
+
+## 🧱 Project Structure
+
+ai-symptom-checker/  
+│  
+├── pages/               # Next.js pages (routing system)  
+├── components/          # Reusable UI components  
+├── hooks/               # Custom React hooks (voice, theme, etc.)  
+├── public/              # Static assets (icons, images)  
+├── styles/              # Global and Tailwind styles  
+├── .env.local           # Environment variables (Groq API key)  
+├── Dockerfile           # Docker image configuration  
+├── compose.yaml         # Docker Compose setup  
+├── deployment.yaml      # Kubernetes Deployment configuration  
+├── service.yaml         # Kubernetes Service configuration  
+└── .github/workflows/   # GitHub Actions (CI/CD pipeline)
+
+---
+
+## 🐳 Deployment
 
 ### Docker
 
-A `Dockerfile` is provided to build a Docker image of the application. You can build the image with the following command:
+Build the Docker image:  
+docker build -t ai-symptom-analyzer .  
 
-```sh
-docker build -t symptom-analyzer .
-```
+Run the container locally:  
+docker run -p 3000:3000 ai-symptom-analyzer  
 
-A `compose.yaml` file is also provided for easy local deployment using Docker Compose.
+Or use Docker Compose:  
+docker compose up  
 
 ### Kubernetes
 
-The `deployment.yaml` and `service.yaml` files can be used to deploy the application to a Kubernetes cluster. You can apply these files with the following command:
-
-```sh
+To deploy on a Kubernetes cluster:  
 kubectl apply -f deployment.yaml -f service.yaml
-```
 
-## CI/CD
+---
 
-This project is configured with a CI/CD pipeline using GitHub Actions. The pipeline is defined in the `.github/workflows/main.yml` file. The pipeline will automatically build and test the application on every push to the `main` branch. It will also build and push a Docker image to a container registry and deploy the application to a Kubernetes cluster.
+## ⚡ CI/CD Pipeline
+
+This project includes a **GitHub Actions** workflow (`.github/workflows/main.yml`) that automates:  
+✅ Building and testing on every push  
+🐳 Building and pushing Docker images  
+🚀 Deploying automatically to Kubernetes clusters  
