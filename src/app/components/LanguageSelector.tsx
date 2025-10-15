@@ -11,11 +11,11 @@ export const LanguageSelector: React.FC = () => {
       <select
         value={language}
         onChange={(e) => setLanguage(e.target.value as 'en' | 'ar')}
-        className="bg-transparent outline-none cursor-pointer text-gray-700 dark:text-gray-200 font-medium"
+        className="bg-transparent dark:bg-gray-800 outline-none cursor-pointer text-gray-700 dark:text-gray-200 font-medium"
         style={{ direction: language === 'ar' ? 'rtl' : 'ltr' }}
       >
-        <option value="en">English</option>
-        <option value="ar">العربية</option>
+        <option value="en" className="dark:bg-gray-800">English</option>
+        <option value="ar" className="dark:bg-gray-800">العربية</option>
       </select>
     </div>
   );

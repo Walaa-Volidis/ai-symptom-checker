@@ -1,99 +1,86 @@
-# 🩺 AI Symptom Checker
+# AI-Powered Symptom Analyzer
 
-An intelligent, multilingual symptom checker powered by AI. Describe your symptoms in plain language and receive instant, detailed analysis, including potential conditions, severity levels, and self-care advice.
+This is a web application that allows users to input their symptoms and get an analysis of possible causes using AI.
 
----
+## Features
 
-## ✨ Features
+*   **Symptom Analysis:** Users can enter their symptoms and get a list of possible medical conditions.
+*   **Dark/Light Theme:** The application supports both dark and light themes for user comfort.
+*   **Language Selection:** The application supports both English and Arabic languages.
+*   **Text-to-Speech:** The application can read the analysis results out loud.
+*   **Voice Input:** Users can input their symptoms using their voice.
 
--   **AI-Powered Analysis:** Leverages the Groq API with Llama 3.1 for fast and accurate symptom analysis.
--   **Multilingual Support:** Fully supports both **English** and **Arabic**, with a dynamic UI that adapts to Right-to-Left (RTL) layouts.
--   **Detailed Results:** Provides comprehensive analysis, including:
-    -   Possible Condition
-    -   Severity Level (Mild, Moderate, Severe)
-    -   Detailed Summary
-    -   Identified Symptoms
-    -   Personalized Self-Care Tips
-    -   Recommended Specialist
-    -   Actionable Next Steps
--   **Sleek, Modern UI:** Built with Next.js, Tailwind CSS, and Radix UI for a responsive and intuitive user experience.
--   **Dark Mode:** Includes a theme toggle for comfortable use in all lighting conditions.
--   **Voice Input:** Supports voice-to-text for hands-free symptom description (in supported browsers).
+## Technologies Used
 
+*   **Next.js:** A React framework for building server-side rendered and static web applications.
+*   **TypeScript:** A typed superset of JavaScript that compiles to plain JavaScript.
+*   **Tailwind CSS:** A utility-first CSS framework for rapidly building custom user interfaces.
+*   **Lucide React:** A library of simply designed icons for React.
+*   **Google Generative AI:** The AI model used for symptom analysis.
 
+## Getting Started
 
-## 🛠️ Technologies Used
-
--   **Frontend:** [Next.js](https://nextjs.org/), [React](https://reactjs.org/), [Tailwind CSS](https://tailwindcss.com/)
--   **AI:** [Groq API](https://groq.com/), [Llama 3.1](https://llama.meta.com/llama3/)
--   **UI Components:** [Radix UI](https://www.radix-ui.com/), [Lucide React](https://lucide.dev/)
--   **State Management:** React Hooks & Context API
--   **Schema Validation:** [Zod](https://zod.dev/)
--   **Deployment:** [Docker](https://www.docker.com/), [Kubernetes](https://kubernetes.io/), [Vercel](https://vercel.com/)
-
----
-
-## 🚀 Getting Started
+To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
--   [Node.js](https://nodejs.org/en/) (v20.x or later)
--   [npm](https://www.npmjs.com/)
--   [Git](https://git-scm.com/)
+*   npm
+```sh
+npm install npm@latest -g
+```
 
 ### Installation
 
-1.  **Clone the repository:**
+1.  Clone the repo
+```sh
+git clone https://github.com/your_username_/Project-Name.git
+```
+2.  Install NPM packages
+```sh
+npm install
+```
+3.  Create a `.env.local` file and add your Google Generative AI API key:
+```sh
+NEXT_PUBLIC_GOOGLE_API_KEY=YOUR_API_KEY
+```
 
-    ```bash
-    git clone https://github.com/walaa-volidis/ai-symptom-checker.git
-    cd ai-symptom-checker
-    ```
+### Running the Application
 
-2.  **Install dependencies:**
+```sh
+npm run dev
+```
 
-    ```bash
-    npm install
-    ```
+## Usage
 
-3.  **Set up environment variables:**
+1.  Enter your symptoms in the text area or use the voice input button.
+2.  Click the "Analyze Symptoms" button.
+3.  The application will display a list of possible medical conditions based on your symptoms.
+4.  You can toggle between dark and light themes using the theme toggle button.
+5.  You can switch between English and Arabic languages using the language selector.
+6.  You can use the text-to-speech feature to have the results read to you.
 
-    Create a `.env.local` file in the root of the project and add your Groq API key:
+## Deployment
 
-    ```env
-    GROQ_API_KEY="your_groq_api_key"
-    ```
-
-4.  **Run the development server:**
-
-    ```bash
-    npm run dev
-    ```
-
-    Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
-
----
-
-## ⚙️ Environment Variables
-
--   `GROQ_API_KEY`: Your API key for the Groq service.
-
----
-
-## 🐳 Deployment
-
-This project includes `Dockerfile`, `compose.yaml`, `deployment.yaml`, and `service.yaml` for easy containerization and deployment with Docker and Kubernetes.
+This application is containerized using Docker and can be deployed to a Kubernetes cluster.
 
 ### Docker
 
-To build and run the Docker container:
+A `Dockerfile` is provided to build a Docker image of the application. You can build the image with the following command:
 
-```bash
-# Build the image
-docker build -t ai-symptom-checker .
-
-# Run the container
-docker run -p 3000:3000 ai-symptom-checker
+```sh
+docker build -t symptom-analyzer .
 ```
 
----
+A `compose.yaml` file is also provided for easy local deployment using Docker Compose.
+
+### Kubernetes
+
+The `deployment.yaml` and `service.yaml` files can be used to deploy the application to a Kubernetes cluster. You can apply these files with the following command:
+
+```sh
+kubectl apply -f deployment.yaml -f service.yaml
+```
+
+## CI/CD
+
+This project is configured with a CI/CD pipeline using GitHub Actions. The pipeline is defined in the `.github/workflows/main.yml` file. The pipeline will automatically build and test the application on every push to the `main` branch. It will also build and push a Docker image to a container registry and deploy the application to a Kubernetes cluster.
