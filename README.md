@@ -3,8 +3,6 @@
 An intelligent and bilingual web application that allows users to describe their symptoms and receive an **AI-generated health analysis** using the **Groq API**.  
 The app includes voice input, text-to-speech output, dark/light themes, and supports both Arabic and English for an accessible experience.
 
-> ⚠️ **Disclaimer:** This project is for **educational and informational purposes only** and should **not be used as a substitute for professional medical diagnosis or treatment.**
-
 ---
 
 ## ✨ Features
