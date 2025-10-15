@@ -24,8 +24,6 @@ The app includes voice input, text-to-speech output, dark/light themes, and supp
 | **Tailwind CSS** | Utility-first CSS framework for responsive UI |
 | **Lucide React** | Clean, lightweight icons |
 | **Groq API** | Powers the AI symptom reasoning |
-| **SpeechRecognition API** | Handles voice input |
-| **SpeechSynthesis API** | Enables text-to-speech responses |
 
 ---
 
@@ -72,24 +70,6 @@ The AI model (via Groq API) suggests possible medical conditions.
 Use the 🔊 button to listen to results.  
 Switch between 🌙 Dark / ☀️ Light modes.  
 Change the interface language between 🇬🇧 English and 🇸🇦 Arabic.
-
----
-
-## 🧱 Project Structure
-
-ai-symptom-checker/  
-│  
-├── pages/               # Next.js pages (routing system)  
-├── components/          # Reusable UI components  
-├── hooks/               # Custom React hooks (voice, theme, etc.)  
-├── public/              # Static assets (icons, images)  
-├── styles/              # Global and Tailwind styles  
-├── .env.local           # Environment variables (Groq API key)  
-├── Dockerfile           # Docker image configuration  
-├── compose.yaml         # Docker Compose setup  
-├── deployment.yaml      # Kubernetes Deployment configuration  
-├── service.yaml         # Kubernetes Service configuration  
-└── .github/workflows/   # GitHub Actions (CI/CD pipeline)
 
 ---
 
